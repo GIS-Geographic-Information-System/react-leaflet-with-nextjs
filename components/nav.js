@@ -1,12 +1,15 @@
-import React from 'react'
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
 
 const links = [
-  { href: 'https://github.com/rajeshdh/react-leaflet-with-nextjs', label: 'Github' }
-].map(link => {
-  link.key = `nav-link-${link.href}-${link.label}`
-  return link
-})
+  {
+    href: "https://github.com/rajeshdh/react-leaflet-with-nextjs",
+    label: "Github",
+  },
+].map((link) => {
+  link.key = `nav-link-${link.href}-${link.label}`;
+  return link;
+});
 
 const Nav = () => (
   <nav>
@@ -14,6 +17,14 @@ const Nav = () => (
       <li>
         <Link prefetch href="/">
           <a>Home</a>
+        </Link>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <Link prefetch href="/smartseeds">
+          <a>SmartSeeds</a>
+        </Link>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <Link prefetch href="/countries">
+          <a>Countries</a>
         </Link>
       </li>
       <ul>
@@ -54,6 +65,6 @@ const Nav = () => (
       }
     `}</style>
   </nav>
-)
+);
 
-export default Nav
+export default Nav;

@@ -6,8 +6,12 @@ import {
   Popup,
   MapControl,
   withLeaflet,
+  MapEvents,
+  GeoJSON,
 } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+
+import raizen2Json from "../data/raizen2";
 
 import * as data from "./seedlibraryData.json";
 
@@ -56,14 +60,14 @@ import * as data from "./seedlibraryData.json";
 export default class MyMap extends Component {
   state = {
     center: {
-      lat: -22.725,
-      lng: -47.6476,
+      lat: -22.716429163372883,
+      lng: -47.733471393585205,
     },
     marker: {
-      lat: -22.725,
-      lng: -47.6476,
+      lat: -22.716429163372883,
+      lng: -47.733471393585205,
     },
-    zoom: 13,
+    zoom: 23,
     draggable: true,
   };
 
@@ -86,12 +90,22 @@ export default class MyMap extends Component {
     const markerPosition = [this.state.marker.lat, this.state.marker.lng];
     // const SearchBar = withLeaflet(SearchBox);
 
+    const countryStyle = {
+      fillColor: "red",
+      fillOpacity: 1,
+      color: "black",
+      weight: 2,
+    };
     return (
       <div className="map-root">
         <Map
           center={position}
           zoom={this.state.zoom}
           style={{
+            fillColor: "red",
+            fillOpacity: 1,
+            color: "black",
+            weight: 2,
             height: "700px",
             // width: "400px",
           }}
@@ -101,7 +115,18 @@ export default class MyMap extends Component {
             url="https://api.mapbox.com/styles/v1/viannaandresouza/cl2cow8rn000414lk7kon03nk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoidmlhbm5hYW5kcmVzb3V6YSIsImEiOiJja2hpOTVrcnowdmxoMnFzMXE5end6MXlyIn0.eP2vC12qAfS11lzLU_F0Rg"
           />
 
-          {data.features.map((seedlibrary) => (
+          {/* <script>L.geoJSON(raizen2JSON).addTo(map)</script>
+          <Marker position={L.geoJSON(raizen2JSON)}></Marker>
+
+          <GeoJSON
+            style={this.countryStyle}
+            data={raizen2Json.features}
+            onEachFeature={this.onEachCountry}
+          /> */}
+
+          <GeoJSON style={countryStyle} data={raizen2Json.features} />
+
+          {/* {data.features.map((seedlibrary) => (
             <Marker
               key={seedlibrary.properties.library_ID}
               position={[
@@ -117,7 +142,7 @@ export default class MyMap extends Component {
                 {seedlibrary.properties.city}
               </Popup>
             </Marker>
-          ))}
+          ))} */}
 
           {/* <Marker
             draggable={true}

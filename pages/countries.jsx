@@ -1,60 +1,19 @@
-import React, { Component, createRef } from "react";
-import {
-  Map,
-  TileLayer,
-  Marker,
-  Popup,
-  MapControl,
-  withLeaflet,
-} from "react-leaflet";
-import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import * as React from "react";
 
-import * as data from "./seedlibraryData.json";
 
-// import * as data from "../data/seedlibraryData.json";
+import Nav from '../components/nav'
+import Head from '../components/head'
 
-// class SearchBox extends MapControl {
-//   constructor(props) {
-//     super(props);
-//     props.leaflet.map.on("geosearch/showlocation", (e) =>
-//       props.updateMarker(e)
-//     );
-//   }
 
-//   createLeafletElement() {
-//     const searchEl = GeoSearchControl({
-//       provider: new OpenStreetMapProvider(),
-//       style: "bar",
-//       showMarker: true,
-//       showPopup: false,
-//       autoClose: true,
-//       retainZoomLevel: false,
-//       animateZoom: true,
-//       keepResult: false,
-//       searchLabel: "search",
-//     });
-//     return searchEl;
-//   }
-// }
+import dynamic from 'next/dynamic';
 
-// attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 
-//Latitude: -22.725, Longitude: -47.6476
-// state = {
-//   center: {
-//     lat: 31.698956,
-//     lng: 76.732407,
-//   },
-//   marker: {
-//     lat: 31.698956,
-//     lng: 76.732407,
-//   },
-//   zoom: 13,
-//   draggable: true,
-// };
-
-export default class MyMap extends Component {
-  state = {
+function Home(){
+  const home = "Countries"
+  const MapWithNoSSR = dynamic(() => import('../components/mapSmartSeeds'), {
+    ssr: false
+  });
+  const position = {
     center: {
       lat: -22.725,
       lng: -47.6476,
@@ -67,30 +26,20 @@ export default class MyMap extends Component {
     draggable: true,
   };
 
-  refmarker = createRef(this.state.marker);
+  const zoomMap= 13;
 
-  toggleDraggable = () => {
-    this.setState({ draggable: !this.state.draggable });
-  };
-
-  updateMarker = (e) => {
-    // const marker = e.marker;
-    this.setState({
-      marker: e.marker.getLatLng(),
-    });
-    console.log(e.marker.getLatLng());
-  };
-
-  render() {
-    const position = [this.state.center.lat, this.state.center.lng];
-    const markerPosition = [this.state.marker.lat, this.state.marker.lng];
-    // const SearchBar = withLeaflet(SearchBox);
-
-    return (
-      <div className="map-root">
+  return(
+    <div>
+    <Head title="Countries" />
+    <Nav />
+      <span>{home}</span>
+      <div>
+     <MapWithNoSSR />
+    </div>
+      {/* <div className="map-root">
         <Map
           center={position}
-          zoom={this.state.zoom}
+          zoom={zoomMap}
           style={{
             height: "700px",
             // width: "400px",
@@ -119,7 +68,7 @@ export default class MyMap extends Component {
             </Marker>
           ))}
 
-          {/* <Marker
+          <Marker
             draggable={true}
             onDragend={this.updatePosition}
             position={markerPosition}
@@ -131,9 +80,9 @@ export default class MyMap extends Component {
                 {this.state.draggable ? "DRAG MARKER" : "MARKER FIXED"}
               </span>
             </Popup>
-          </Marker> */}
+          </Marker>
 
-          {/* <SearchBar updateMarker={this.updateMarker} /> */}
+          <SearchBar updateMarker={this.updateMarker} />
         </Map>
         <style jsx>
           {`
@@ -147,7 +96,13 @@ export default class MyMap extends Component {
             }
           `}
         </style>
-      </div>
-    );
-  }
+      </div> */}
+
+      {/* <SmartSeeds/> */}
+    </div>
+  )
 }
+
+
+
+export default Home;
