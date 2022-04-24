@@ -39,15 +39,29 @@ class SearchBox extends MapControl {
 
 // attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 
+//Latitude: -22.725, Longitude: -47.6476
+// state = {
+//   center: {
+//     lat: 31.698956,
+//     lng: 76.732407,
+//   },
+//   marker: {
+//     lat: 31.698956,
+//     lng: 76.732407,
+//   },
+//   zoom: 13,
+//   draggable: true,
+// };
+
 export default class MyMap extends Component {
   state = {
     center: {
-      lat: 31.698956,
-      lng: 76.732407,
+      lat: -22.725,
+      lng: -47.6476,
     },
     marker: {
-      lat: 31.698956,
-      lng: 76.732407,
+      lat: -22.725,
+      lng: -47.6476,
     },
     zoom: 13,
     draggable: true,
