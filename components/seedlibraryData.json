@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "library_ID": "01",
+        "location_name": "Stadsoase Spinozahof",
+        "street": "Repelaerstraat 61",
+        "zipcode": "2515 LX",
+        "city": "Den Haag",
+        "website": "http://stadsoasespinozahof.nl/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.072421,
+          4.315050
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "library_ID": "02",
+        "location_name": "Hof van Wouw",
+        "street": "Lange Beestenmarkt 49-85",
+        "zipcode": "2512 EB",
+        "city": "Den Haag",
+        "website": "https://hofvanwouw.nl/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.073980,
+          4.307760
+        ]
+      }
+    }
+  ]
+}

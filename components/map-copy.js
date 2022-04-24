@@ -9,10 +9,6 @@ import {
 } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
-import * as data from "./seedlibraryData.json";
-
-// import * as data from "../data/seedlibraryData.json";
-
 class SearchBox extends MapControl {
   constructor(props) {
     super(props);
@@ -67,6 +63,16 @@ export default class MyMap extends Component {
     console.log(e.marker.getLatLng());
   };
 
+  updatePosition = () => {
+    const marker = this.refmarker.current;
+    if (marker != null) {
+      this.setState({
+        marker: marker.leafletElement.getLatLng(),
+      });
+    }
+    console.log(marker.leafletElement.getLatLng());
+  };
+
   render() {
     const position = [this.state.center.lat, this.state.center.lng];
     const markerPosition = [this.state.marker.lat, this.state.marker.lng];
@@ -86,26 +92,7 @@ export default class MyMap extends Component {
             attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
             url="https://api.mapbox.com/styles/v1/viannaandresouza/cl2cow8rn000414lk7kon03nk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoidmlhbm5hYW5kcmVzb3V6YSIsImEiOiJja2hpOTVrcnowdmxoMnFzMXE5end6MXlyIn0.eP2vC12qAfS11lzLU_F0Rg"
           />
-
-          {data.features.map((seedlibrary) => (
-            <Marker
-              key={seedlibrary.properties.library_ID}
-              position={[
-                seedlibrary.geometry.coordinates[0],
-                seedlibrary.geometry.coordinates[1],
-              ]}
-              animate={false}
-            >
-              <Popup>
-                {seedlibrary.properties.location_name}
-                {seedlibrary.properties.street}
-                {seedlibrary.properties.zipcode}
-                {seedlibrary.properties.city}
-              </Popup>
-            </Marker>
-          ))}
-
-          {/* <Marker
+          <Marker
             draggable={true}
             onDragend={this.updatePosition}
             position={markerPosition}
@@ -117,9 +104,8 @@ export default class MyMap extends Component {
                 {this.state.draggable ? "DRAG MARKER" : "MARKER FIXED"}
               </span>
             </Popup>
-          </Marker> */}
-
-          {/* <SearchBar updateMarker={this.updateMarker} /> */}
+          </Marker>
+          <SearchBar updateMarker={this.updateMarker} />
         </Map>
         <style jsx>
           {`
