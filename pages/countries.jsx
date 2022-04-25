@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 
 function Home(){
   const home = "Countries"
-  const MapWithNoSSR = dynamic(() => import('../components/mapSmartSeeds'), {
+  const MapWithNoSSR = dynamic(() => import('../components/mapCountries'), {
     ssr: false
   });
   const position = {

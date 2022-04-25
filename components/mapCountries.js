@@ -11,51 +11,11 @@ import {
 } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
-import raizen2Json from "../data/raizen2.geojson";
+// import raizen2Json from "../data/raizen2.geojson";
 
-import * as data from "./seedlibraryData.json";
+// import * as data from "./seedlibraryData.json";
 
-// import * as data from "../data/seedlibraryData.json";
-
-// class SearchBox extends MapControl {
-//   constructor(props) {
-//     super(props);
-//     props.leaflet.map.on("geosearch/showlocation", (e) =>
-//       props.updateMarker(e)
-//     );
-//   }
-
-//   createLeafletElement() {
-//     const searchEl = GeoSearchControl({
-//       provider: new OpenStreetMapProvider(),
-//       style: "bar",
-//       showMarker: true,
-//       showPopup: false,
-//       autoClose: true,
-//       retainZoomLevel: false,
-//       animateZoom: true,
-//       keepResult: false,
-//       searchLabel: "search",
-//     });
-//     return searchEl;
-//   }
-// }
-
-// attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-
-//Latitude: -22.725, Longitude: -47.6476
-// state = {
-//   center: {
-//     lat: 31.698956,
-//     lng: 76.732407,
-//   },
-//   marker: {
-//     lat: 31.698956,
-//     lng: 76.732407,
-//   },
-//   zoom: 13,
-//   draggable: true,
-// };
+import mapData from "../data/countries.json";
 
 export default class MyMap extends Component {
   state = {
@@ -69,7 +29,14 @@ export default class MyMap extends Component {
     },
     zoom: 23,
     draggable: true,
+    color: "#ffff00",
   };
+
+  colors = ["green", "blue", "yellow", "orange", "grey"];
+
+  componentDidMount() {
+    console.log(mapData);
+  }
 
   refmarker = createRef(this.state.marker);
 
@@ -85,20 +52,51 @@ export default class MyMap extends Component {
     console.log(e.marker.getLatLng());
   };
 
-  render() {
-    const position = [this.state.center.lat, this.state.center.lng];
-    const markerPosition = [this.state.marker.lat, this.state.marker.lng];
-    // const SearchBar = withLeaflet(SearchBox);
+  // const position = [this.state.center.lat, this.state.center.lng];
+  // const markerPosition = [this.state.marker.lat, this.state.marker.lng];
+  // // const SearchBar = withLeaflet(SearchBox);
 
-    const countryStyle = {
-      fillColor: "red",
+  countryStyle = {
+    fillColor: "red",
+    fillOpacity: 1,
+    color: "black",
+    weight: 2,
+  };
+
+  printMesssageToConsole = (event) => {
+    console.log("Clicked");
+  };
+
+  changeCountryColor = (event) => {
+    event.target.setStyle({
+      color: "green",
+      fillColor: this.state.color,
       fillOpacity: 1,
-      color: "black",
-      weight: 2,
-    };
+    });
+  };
+
+  onEachCountry = (country, layer) => {
+    const countryName = country.properties.ADMIN;
+    console.log(countryName);
+    layer.bindPopup(countryName);
+
+    layer.options.fillOpacity = Math.random(); //0-1 (0.1, 0.2, 0.3)
+    // const colorIndex = Math.floor(Math.random() * this.colors.length);
+    // layer.options.fillColor = this.colors[colorIndex]; //0
+
+    layer.on({
+      click: this.changeCountryColor,
+    });
+  };
+
+  colorChange = (event) => {
+    this.setState({ color: event.target.value });
+  };
+
+  render() {
     return (
       <div className="map-root">
-        <Map
+        {/* <Map
           center={position}
           zoom={this.state.zoom}
           style={{
@@ -109,7 +107,9 @@ export default class MyMap extends Component {
             height: "700px",
             // width: "400px",
           }}
-        >
+        > */}
+
+        <Map style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
           <TileLayer
             attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
             url="https://api.mapbox.com/styles/v1/viannaandresouza/cl2cow8rn000414lk7kon03nk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoidmlhbm5hYW5kcmVzb3V6YSIsImEiOiJja2hpOTVrcnowdmxoMnFzMXE5end6MXlyIn0.eP2vC12qAfS11lzLU_F0Rg"
@@ -125,44 +125,11 @@ export default class MyMap extends Component {
           /> */}
 
           <GeoJSON
-            style={countryStyle}
-            data={raizen2Json.features}
-            onEachFeature={onEachCountry}
+            style={this.countryStyle}
+            data={mapData.features}
+            onEachFeature={this.onEachCountry}
+            // onEachFeature={onEachCountry}
           />
-
-          {/* {data.features.map((seedlibrary) => (
-            <Marker
-              key={seedlibrary.properties.library_ID}
-              position={[
-                seedlibrary.geometry.coordinates[0],
-                seedlibrary.geometry.coordinates[1],
-              ]}
-              animate={false}
-            >
-              <Popup>
-                {seedlibrary.properties.location_name}
-                {seedlibrary.properties.street}
-                {seedlibrary.properties.zipcode}
-                {seedlibrary.properties.city}
-              </Popup>
-            </Marker>
-          ))} */}
-
-          {/* <Marker
-            draggable={true}
-            onDragend={this.updatePosition}
-            position={markerPosition}
-            animate={true}
-            ref={this.refmarker}
-          >
-            <Popup minWidth={90}>
-              <span onClick={this.toggleDraggable}>
-                {this.state.draggable ? "DRAG MARKER" : "MARKER FIXED"}
-              </span>
-            </Popup>
-          </Marker> */}
-
-          {/* <SearchBar updateMarker={this.updateMarker} /> */}
         </Map>
         <style jsx>
           {`
