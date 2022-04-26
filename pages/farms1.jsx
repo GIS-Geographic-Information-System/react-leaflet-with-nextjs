@@ -9,8 +9,8 @@ import dynamic from 'next/dynamic';
 
 
 function Farms(){
-  const home = "Farms with Class"
-  const MapWithNoSSR = dynamic(() => import('../components/mapFarms'), {
+  const home = "Farms1 - without Class"
+  const MapWithNoSSR = dynamic(() => import('../components/mapFarms1'), {
     ssr: false
   });
 
@@ -19,7 +19,7 @@ function Farms(){
 
   return(
     <div>
-    <Head title="Farms" />
+    <Head title="Farms1" />
     <Nav />
       <span>{home}</span>
     

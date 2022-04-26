@@ -30,6 +30,10 @@ const Nav = () => (
         <Link prefetch href="/farms">
           <a>Farms</a>
         </Link>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <Link prefetch href="/farms1">
+          <a>Farms1</a>
+        </Link>
       </li>
       <ul>
         {links.map(({ key, href, label }) => (
